@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder location="classpath:*.properties" local-override="false"
+                                  system-properties-mode="ENVIRONMENT"/>
+
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <aop:aspectj-autoproxy expose-proxy="true" />
+
+    <mvc:annotation-driven enable-matrix-variables="true">
+        <mvc:message-converters register-defaults="false">
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/plain;charset=utf-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <context:component-scan base-package="com.security.demo.controller"/>
+
+    <!-- jsp视图 -->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--<bean id="slf4j-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">-->
+        <!--<property name="statementExecutableSqlLogEnable" value="true"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">-->
+        <!--<property name="slowSqlMillis" value="3000"/>-->
+        <!--<property name="logSlowSql" value="true"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 数据源 &ndash;&gt;-->
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+        <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
+        <!--<property name="url" value="${connection_url}" />-->
+        <!--<property name="username" value="${connection_username}" />-->
+        <!--<property name="password" value="${connection_password}" />-->
+        <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+        <!--<property name="initialSize" value="${druid.initialSize}" />-->
+        <!--<property name="minIdle" value="${druid.minIdle}" />-->
+        <!--<property name="maxActive" value="${druid.maxActive}" />-->
+        <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+        <!--<property name="maxWait" value="${druid.maxWait}" />-->
+        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />-->
+        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />-->
+        <!--<property name="validationQuery" value="${druid.validationQuery}" />-->
+        <!--<property name="testWhileIdle" value="${druid.testWhileIdle}" />-->
+        <!--<property name="testOnBorrow" value="${druid.testOnBorrow}" />-->
+        <!--<property name="testOnReturn" value="${druid.testOnReturn}" />-->
+        <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。 &ndash;&gt;-->
+        <!--<property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />-->
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />-->
+        <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+        <!--<property name="filters" value="${druid.filters}" />-->
+        <!--&lt;!&ndash; <property name="connectionProperties" value="${druid.connectionProperties}" /> &ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="proxyFilters">&ndash;&gt;-->
+            <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                <!--&lt;!&ndash;<ref bean="stat-filter"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<ref bean="slf4j-filter"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</list>&ndash;&gt;-->
+        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <!--<property name="mappingResources">-->
+            <!--<list>-->
+                <!--<value>com/xx/xxx/Xxx.hbm.xml</value>-->
+                <!--<value>com/yy/yyy/Yyy.hbm.xml</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">${hibernate.dialect}</prop>-->
+                <!--<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>-->
+                <!--<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 开启注解事务 只对当前配置文件有效 &ndash;&gt;-->
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
+    <!--&lt;!&ndash; 配置Hibernate事务管理器 &ndash;&gt;-->
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+    <!--</bean>-->
+
+    <bean id="userDao" class="com.security.demo.dao.impl.UsersDaoImpl">
+        <property name="demopro" value="${demo.pro}"/>
+            </bean>
+</beans>

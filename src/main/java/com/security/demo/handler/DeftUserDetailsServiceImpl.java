@@ -53,7 +53,7 @@ public class DeftUserDetailsServiceImpl implements UserDetailsService {
         if (roleList != null) {
             for (int i = 0; i < roleList.size(); i++) {
                 String roleName = roleList.get(i);
-                authSet.add(new SimpleGrantedAuthority(roleName));
+                authSet.add(new ComparableGrantedAuthority(roleName));
             }
         }
         return authSet;

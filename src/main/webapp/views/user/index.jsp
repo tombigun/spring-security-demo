@@ -8,12 +8,17 @@
 <body>
 <jsp:include page="../core/header.jsp"/>
 
-
 <div id="main" class="main">
 
 <%--demo--%>
     demo  ${helloworld}
 
+
+    SessionID:<%=session.getId()%>
+    <BR>
+    SessionIP:<%=request.getServerName()%>
+    <BR>
+    SessionPort:<%=request.getServerPort()%>
 
 </div>
 <jsp:include page="../core/footer.jsp"/>

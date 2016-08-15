@@ -5,9 +5,10 @@ import com.security.demo.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class LoginUser extends org.springframework.security.core.userdetails.User {
+public class LoginUser extends org.springframework.security.core.userdetails.User implements Serializable {
     private static final long serialVersionUID = 1919464185097508773L;
 
     private User user;
